@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- set pageTitle = site.name if page.url == "/" else (title + " — " + site.name) %}
+  {%- set pageDescription = summary or description or site.description %}
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ pageDescription }}">
+  <link rel="canonical" href="{{ page.url | absoluteUrl }}">
+  <meta property="og:title" content="{{ pageTitle }}">
+  <meta property="og:description" content="{{ pageDescription }}">
+  <meta property="og:url" content="{{ page.url | absoluteUrl }}">
+  <meta property="og:type" content="website">
+  {% shareImage coverSrc or collections.projects[0].data.coverSrc %}
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=DM+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header wrap">
+    <a class="wordmark" href="/">{{ site.name }}</a>
+    <nav class="site-nav" aria-label="Main">
+      <a href="/"{% if page.url == "/" or "/projects/" in (page.url or "") %} aria-current="page"{% endif %}>Work</a>
+      <a href="/about/"{% if page.url == "/about/" %} aria-current="page"{% endif %}>About</a>
+      {%- if site.resume %}
+      <a href="/{{ site.resume }}">Resume</a>
+      {%- endif %}
+    </nav>
+  </header>
+
+  <main id="main">
+    {{ content | safe }}
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>© {{ "" | year }} {{ site.name }}</p>
+    <ul class="footer-links">
+      {%- if site.email %}<li><a href="mailto:{{ site.email }}">Email</a></li>{% endif %}
+      {%- if site.linkedin %}<li><a href="{{ site.linkedin }}">LinkedIn</a></li>{% endif %}
+      {%- if site.resume %}<li><a href="/{{ site.resume }}">Resume</a></li>{% endif %}
+    </ul>
+  </footer>
+
+  <script>
+    // Respect "reduce motion": stop looping videos and give them play controls instead.
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll("video[autoplay]").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); v.controls = true; });
+    }
+  </script>
+</body>
+</html>

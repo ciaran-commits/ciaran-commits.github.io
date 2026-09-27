@@ -1,0 +1,370 @@
+/* Portfolio theme.
+   Colors and fonts are defined once here and used everywhere below. */
+
+:root {
+  --paper: #ffffff;        /* page background */
+  --ink: #151515;          /* main text */
+  --graphite: #666666;     /* secondary text, labels */
+  --rule: #e4e4e4;         /* thin divider lines */
+  --tint: #f2f2f0;         /* shows behind photos while they load */
+  --signal: #5a48e0;       /* link hover, keyboard focus */
+  --signal-soft: #e5e0ff;  /* text selection */
+
+  --sans: "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --pad: clamp(20px, 4vw, 48px);
+  --max: 1320px;
+  --gutter: clamp(12px, 1.8vw, 24px);
+  --space-m: clamp(32px, 4.5vw, 64px);
+  --space-l: clamp(56px, 8vw, 120px);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* ---------- Base ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, picture, video { display: block; max-width: 100%; }
+img, video { height: auto; }
+a { color: inherit; }
+::selection { background: var(--signal-soft); }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 4px; border-radius: 2px; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--pad);
+  z-index: 10;
+  padding: 8px 14px;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+}
+.skip-link:focus { top: 12px; }
+
+/* Small uppercase labels (year, client, "Next project", figure numbers) */
+.project-card-meta,
+.project-specs dt,
+.next-project-label,
+.has-caption figcaption::before {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Header & footer ---------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding-block: 22px;
+}
+
+.wordmark {
+  font-size: 1.0625rem;
+  font-stretch: 125%;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-nav { display: flex; gap: clamp(18px, 2.6vw, 34px); }
+
+.site-nav a {
+  font-size: 0.9375rem;
+  color: var(--graphite);
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+.site-nav a:hover,
+.site-nav a[aria-current="page"] { color: var(--ink); }
+.site-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 7px;
+}
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 24px;
+  margin-top: var(--space-l);
+  padding-block: 28px 40px;
+  /* divider line that lines up with the content, not the screen edge */
+  background: linear-gradient(var(--rule), var(--rule)) center top / calc(100% - 2 * var(--pad)) 1px no-repeat;
+  font-size: 0.875rem;
+  color: var(--graphite);
+}
+.site-footer p { margin: 0; }
+.footer-links { display: flex; gap: 22px; margin: 0; padding: 0; list-style: none; }
+.footer-links a { text-decoration: none; transition: color 200ms ease; }
+.footer-links a:hover { color: var(--ink); }
+
+/* ---------- Home ---------- */
+
+.intro { padding-block: clamp(28px, 6vw, 88px) clamp(36px, 5vw, 72px); }
+
+.intro p {
+  max-width: 44ch;
+  margin: 0;
+  color: var(--graphite);
+}
+.intro p:first-child {
+  max-width: 23ch;
+  font-size: clamp(1.75rem, 1.05rem + 3.1vw, 3.5rem);
+  font-stretch: 112%;
+  font-weight: 470;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.intro p + p { margin-top: clamp(20px, 2.4vw, 32px); }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 44px var(--gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (min-width: 640px) {
+  .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
+}
+@media (min-width: 1000px) {
+  .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.project-card a { display: block; text-decoration: none; }
+.project-card a:focus-visible { outline-offset: 8px; }
+
+.project-card-image {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--tint);
+}
+@media (max-width: 639px) {
+  .project-card-image { margin-inline: calc(-1 * var(--pad)); }
+}
+.project-card-image picture,
+.project-card-image img { width: 100%; height: 100%; }
+.project-card-image img {
+  object-fit: cover;
+  transition: transform 900ms var(--ease);
+}
+.project-card a:hover .project-card-image img { transform: scale(1.03); }
+
+.project-card-title {
+  margin: 16px 0 0;
+  font-size: 1.125rem;
+  font-stretch: 115%;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+}
+.project-card-meta { margin: 5px 0 0; color: var(--graphite); }
+
+/* ---------- Project & page headers ---------- */
+
+.project-head,
+.page-head { padding-block: clamp(32px, 7vw, 104px) var(--space-m); }
+
+.project-title,
+.page-title {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 1.1rem + 5.6vw, 5.75rem);
+  font-stretch: 118%;
+  font-weight: 560;
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.project-summary {
+  max-width: 40ch;
+  margin: clamp(20px, 2.4vw, 32px) 0 0;
+  font-size: clamp(1.125rem, 1rem + 0.55vw, 1.375rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.project-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px var(--gutter);
+  margin: clamp(32px, 4vw, 56px) 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+@media (min-width: 800px) {
+  .project-specs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.project-specs dt { color: var(--graphite); }
+.project-specs dd { margin: 6px 0 0; font-size: 0.9375rem; line-height: 1.45; }
+
+/* ---------- Photos & videos ---------- */
+
+.project,
+.page { counter-reset: fig; }
+
+.media {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gutter);
+  /* A row is never taller than ~80% of the screen: its width is capped by the photos' combined shape. */
+  width: 100%;
+  /* (very tall images like posters still get at least 26rem) */
+  max-width: max(calc(var(--row-ar, 1) * 80svh + var(--gaps, 0) * var(--gutter)), 26rem);
+  margin-block: var(--space-m);
+  margin-inline: auto;
+}
+.media + .media { margin-top: calc(var(--gutter) - var(--space-m)); }
+.project-cover .media { margin-top: 0; }
+
+/* Items in a row share the width in proportion to their shape, so heights match. */
+.media-item { flex: var(--ar) 1 0%; min-width: 0; margin: 0; }
+.media-item img,
+.media-item video { width: 100%; background: var(--tint); }
+
+figcaption {
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--graphite);
+  text-wrap: pretty;
+}
+.has-caption figcaption::before {
+  counter-increment: fig;
+  content: "Fig. " counter(fig, decimal-leading-zero);
+  margin-right: 0.9em;
+  color: var(--ink);
+}
+
+/* Phones: photos run edge to edge and stack. Rows of 4+ become two-up. */
+@media (max-width: 699px) {
+  .media {
+    flex-direction: column;
+    gap: 12px;
+    width: auto;
+    max-width: none;
+    margin-inline: calc(-1 * var(--pad));
+  }
+  .media + .media { margin-top: calc(12px - var(--space-m)); }
+  .media-item { flex: none; width: 100%; }
+  .media:is([data-count="4"], [data-count="5"], [data-count="6"], [data-count="7"], [data-count="8"]) {
+    flex-flow: row wrap;
+  }
+  .media:is([data-count="4"], [data-count="5"], [data-count="6"], [data-count="7"], [data-count="8"]) .media-item {
+    width: calc(50% - 6px);
+  }
+  figcaption { padding-inline: var(--pad); }
+}
+
+/* ---------- Written content ---------- */
+
+.prose { display: grid; grid-template-columns: minmax(0, 1fr); }
+.prose > :where(:not(.media)) { margin: 0 0 1em; }
+.prose p,
+.prose li { max-width: 66ch; text-wrap: pretty; }
+
+.prose > h2 {
+  margin: var(--space-m) 0 0.4em;
+  font-size: 1.0625rem;
+  font-stretch: 118%;
+  font-weight: 640;
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+}
+.prose > h3 { margin: 1.4em 0 0.2em; font-size: 1.0625rem; font-weight: 620; }
+.prose ul,
+.prose ol { padding-left: 1.15em; }
+.prose li + li { margin-top: 0.35em; }
+.prose strong { font-weight: 620; }
+.prose a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+.prose a:hover { color: var(--signal); }
+.prose hr { margin-block: var(--space-m); border: 0; border-top: 1px solid var(--rule); }
+.prose blockquote {
+  margin-inline: 0;
+  font-size: clamp(1.25rem, 1rem + 0.8vw, 1.625rem);
+  font-stretch: 110%;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+.prose blockquote p { margin: 0; }
+
+/* Wider screens: section headings sit in a narrow left column, text on the right. */
+@media (min-width: 900px) {
+  .prose { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+  .prose > * { grid-column: 5 / span 7; }
+  .prose > h2 { grid-column: 1 / span 3; margin: var(--space-m) 0 0; }
+  .prose > h2 + :not(h2, .media) { margin-top: var(--space-m); }
+  .prose > .media { grid-column: 1 / -1; }
+}
+
+.page .prose > p:first-of-type {
+  font-size: clamp(1.125rem, 1rem + 0.55vw, 1.375rem);
+  line-height: 1.45;
+}
+.page-photo { margin: 0 0 var(--space-m); max-width: 360px; }
+.page-photo img { width: 100%; background: var(--tint); }
+
+/* ---------- Next project ---------- */
+
+.next-project {
+  display: block;
+  margin-top: var(--space-l);
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+}
+.next-project-label { display: block; color: var(--graphite); }
+.next-project-title {
+  display: block;
+  margin-top: 12px;
+  font-size: clamp(1.75rem, 1rem + 3vw, 3.25rem);
+  font-stretch: 118%;
+  font-weight: 560;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.next-project-title span { display: inline-block; transition: transform 450ms var(--ease); }
+.next-project:hover .next-project-title span { transform: translateX(8px); }
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

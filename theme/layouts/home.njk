@@ -1,0 +1,24 @@
+---
+layout: base.njk
+---
+<section class="intro wrap">
+  {{ content | safe }}
+</section>
+
+<section class="work wrap" aria-label="Projects">
+  <ul class="project-grid">
+    {%- for project in collections.projects %}
+    <li class="project-card">
+      <a href="{{ project.url }}">
+        <div class="project-card-image">
+          {%- if project.data.coverSrc %}
+          <img src="{{ project.data.coverSrc }}" alt="" sizes="(min-width: 1000px) 420px, (min-width: 640px) 50vw, 100vw"{% if loop.first %} loading="eager" fetchpriority="high"{% endif %}>
+          {%- endif %}
+        </div>
+        <h2 class="project-card-title">{{ project.data.title }}</h2>
+        <p class="project-card-meta">{{ project.data | metaLine }}</p>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
