@@ -41,7 +41,12 @@ order: 1                        # position on the home page (1 = first)
 ---
 ```
 
-Want to hide a project without deleting it? Add the line `draft: true`.
+Optional extra lines:
+
+- `timeline: "January – April 2026"` shows on the project page instead of the year.
+- `outcome: "Published on the Formlabs support site"` adds an Outcome item next to Role and Tools.
+- `hero: "images/lineup.jpg"` uses a different photo at the top of the project page, while `cover` stays the home page thumbnail.
+- `draft: true` hides the project without deleting it.
 
 Below the top section, write the page in plain text:
 

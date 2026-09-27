@@ -121,9 +121,16 @@ export default function (eleventyConfig) {
       if (data.page.fileSlug === "home" && pageDir(data.page.inputPath) === "") return "home.njk";
       return "page.njk";
     },
+    // `cover` is the home page thumbnail; `hero` (optional) is the big photo at the top of the project page.
     coverSrc: (data) => {
       if (!isProject(data)) return undefined;
       if (data.cover) return resolveSrc(data.cover, data.page.inputPath);
+      return folderMedia(data.page.inputPath).find((src) => IMAGE_EXT.test(src));
+    },
+    heroSrc: (data) => {
+      if (!isProject(data)) return undefined;
+      const pick = data.hero || data.cover;
+      if (pick) return resolveSrc(pick, data.page.inputPath);
       return folderMedia(data.page.inputPath).find((src) => IMAGE_EXT.test(src));
     },
   });

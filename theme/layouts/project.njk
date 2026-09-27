@@ -9,21 +9,23 @@ layout: base.njk
     {%- endif %}
     <dl class="project-specs">
       {%- if client %}<div><dt>Client</dt><dd>{{ client }}</dd></div>{% endif %}
-      {%- if year %}<div><dt>Year</dt><dd>{{ year }}</dd></div>{% endif %}
+      {%- if timeline %}<div><dt>Timeline</dt><dd>{{ timeline }}</dd></div>
+      {%- elif year %}<div><dt>Year</dt><dd>{{ year }}</dd></div>{% endif %}
       {%- if role %}<div><dt>Role</dt><dd>{{ role }}</dd></div>{% endif %}
       {%- if tools %}<div><dt>Tools</dt><dd>{{ tools }}</dd></div>{% endif %}
+      {%- if outcome %}<div><dt>Outcome</dt><dd>{{ outcome }}</dd></div>{% endif %}
     </dl>
   </header>
 
   <div class="project-cover">
-    {{ coverSrc | coverImage(title) | safe }}
+    {{ heroSrc | coverImage(title) | safe }}
   </div>
 
   <div class="prose">
     {{ content | safe }}
     {#- No photos placed in the text? Show everything in the images folder. #}
     {%- if not (content | hasMedia) %}
-    {{ page.inputPath | folderGallery(coverSrc) | safe }}
+    {{ page.inputPath | folderGallery(heroSrc) | safe }}
     {%- endif %}
   </div>
 
