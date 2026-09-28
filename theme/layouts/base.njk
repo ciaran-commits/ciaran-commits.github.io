@@ -52,5 +52,11 @@
       document.querySelectorAll("video[autoplay]").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); v.controls = true; });
     }
   </script>
+  {%- if content | hasViewer %}
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+  </script>
+  <script type="module" src="/viewer.js"></script>
+  {%- endif %}
 </body>
 </html>

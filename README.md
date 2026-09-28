@@ -19,7 +19,7 @@ content/
 
 ## Add a new project
 
-1. **Copy an existing project folder** (for example `pencil-holder`) and rename it. Use lowercase with dashes, like `desk-lamp`. The folder name becomes the page address: `ciaran-commits.github.io/projects/desk-lamp/`.
+1. **Copy an existing project folder** (for example `name-tag`) and rename it. Use lowercase with dashes, like `desk-lamp`. The folder name becomes the page address: `ciaran-commits.github.io/projects/desk-lamp/`.
 2. **Swap the photos** in its `images` folder for your own. Use JPG or PNG (not HEIC), and file names without spaces, like `lamp-front.jpg`. Full-size phone photos are fine: the site shrinks them automatically.
 3. **Edit `project.md`** (see below).
 4. **Publish** (see the end of this guide).

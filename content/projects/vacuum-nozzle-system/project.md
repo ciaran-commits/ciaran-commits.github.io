@@ -34,6 +34,11 @@ Talking it through with my manager, I realized no single shape could reach every
 
 ![The base with its swappable tips](images/cad-system.png)
 
+![Base](models/base.glb)
+![Default tip](models/default-tip.glb)
+![Hook tip](models/hook-tip.glb)
+![Precision tip](models/precision-tip.glb)
+
 ## Designing the connection
 
 The connection had to hold firmly on every customer's printer. I tested several connection styles and chose a bayonet mount over a friction (tolerance) fit. A tolerance fit depends on exact part dimensions, which change with printer settings, so it might be too tight on one machine and too loose on another. A bayonet locks mechanically, so it holds regardless of how the part was printed.

@@ -12,6 +12,7 @@ const SITE_URL = "https://ciaran-commits.github.io";
 
 const IMAGE_EXT = /\.(jpe?g|png|gif|webp|avif)$/i;
 const VIDEO_EXT = /\.(mp4|webm|mov)$/i;
+const MODEL_EXT = /\.glb$/i;
 
 // ---------- helpers ----------
 
@@ -59,7 +60,22 @@ function mediaRow(items, { eager = false } = {}) {
   return `<div class="media" data-count="${count}" style="--row-ar: ${rowShape.toFixed(4)}; --gaps: ${count - 1}">${figures.join("")}</div>\n`;
 }
 
+// An interactive 3D viewer. Several models get buttons to show each one, plus "All parts".
+function viewerBlock(items) {
+  const models = items.map(({ src, alt }) => ({ src, name: alt || "Model" }));
+  const buttons =
+    models.length > 1
+      ? `<div class="viewer-parts" role="group" aria-label="Show part"><button type="button" aria-pressed="true" data-part="all">All parts</button>${models
+          .map((m, i) => `<button type="button" aria-pressed="false" data-part="${i}">${escapeHtml(m.name)}</button>`)
+          .join("")}</div>`
+      : "";
+  const label = models.length > 1 ? "3D model of the parts" : `3D model: ${models[0].name}`;
+  return `<figure class="viewer" data-models="${escapeHtml(JSON.stringify(models))}" aria-label="${escapeHtml(label)}"><div class="viewer-stage"><p class="viewer-status">Loading 3D model…</p><p class="viewer-hint" aria-hidden="true">Drag to rotate</p></div>${buttons}</figure>
+`;
+}
+
 // Markdown: a paragraph containing only images becomes a row of photos.
+// If every image in it is a .glb 3D model, it becomes a 3D viewer instead.
 // Images on consecutive lines sit side by side; a blank line starts a new row.
 function mediaRowsPlugin(md) {
   md.core.ruler.push("media_rows", (state) => {
@@ -79,7 +95,7 @@ function mediaRowsPlugin(md) {
         return { src: resolveSrc(t.attrGet("src"), inputPath), alt, caption: t.attrGet("title") || alt };
       });
       const block = new state.Token("html_block", "", 0);
-      block.content = mediaRow(items);
+      block.content = items.every((item) => MODEL_EXT.test(item.src)) ? viewerBlock(items) : mediaRow(items);
       tokens.splice(i, 3, block);
     }
   });
@@ -156,7 +172,8 @@ export default function (eleventyConfig) {
 
   // Template helpers used by the layouts in theme/.
   eleventyConfig.addFilter("coverImage", (src, alt = "") => (src ? mediaRow([{ src, alt }], { eager: true }) : ""));
-  eleventyConfig.addFilter("hasMedia", (html = "") => /<(img|video)\b/.test(html));
+  eleventyConfig.addFilter("hasMedia", (html = "") => /<(img|video)\b|class="viewer"/.test(html));
+  eleventyConfig.addFilter("hasViewer", (html = "") => html.includes('class="viewer"'));
   eleventyConfig.addFilter("folderGallery", (inputPath, skip) => {
     const files = folderMedia(inputPath).filter((src) => src !== skip);
     let html = "";
@@ -203,8 +220,8 @@ export default function (eleventyConfig) {
   });
 
   // Files copied to the site as they are.
-  eleventyConfig.addPassthroughCopy(`${INPUT}/**/*.{pdf,mp4,webm,mov}`);
-  eleventyConfig.addPassthroughCopy({ "theme/style.css": "style.css", "theme/favicon.svg": "favicon.svg" });
+  eleventyConfig.addPassthroughCopy(`${INPUT}/**/*.{pdf,mp4,webm,mov,glb}`);
+  eleventyConfig.addPassthroughCopy({ "theme/style.css": "style.css", "theme/favicon.svg": "favicon.svg", "theme/viewer.js": "viewer.js" });
   eleventyConfig.addWatchTarget("theme/");
 
   return {
