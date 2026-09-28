@@ -48,11 +48,9 @@ I printed and tested 20+ versions to find which tips actually earned a place in 
 
 ![More than 20 printed prototypes](images/iterations-overhead.jpg)
 
-<!-- Replace each caption below (the words in [ ]) with one line on what failed in that version. -->
-
-![First full-size print](images/prototype-01.jpg)
-![Wide tip, cut from the final kit](images/prototype-wide-tip.jpg)
-![Early hook tip](images/prototype-hook-tip-01.jpg)
+![First full-size print: the interference fit I started with held inconsistently, which led me to the bayonet mount](images/prototype-01.jpg)
+![Y-tip: I designed it before testing, and feedback showed the default tip already handled the main jobs, so it was cut](images/prototype-wide-tip.jpg)
+![Early hook tip: a generic hook, until testing showed the real job was reaching into the powder troughs, so I reshaped it for that](images/prototype-hook-tip-01.jpg)
 
 The final kit has three tips:
 
